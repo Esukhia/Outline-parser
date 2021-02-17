@@ -80,7 +80,7 @@ def get_max_match(cur_matches):
             max_match = [derge_text_id, similarity]
     return max_match
 
-def filter_text_without_work_id(target_index_file, derge_index, text_not_in_target):
+def fix_text_without_work_id(target_index_file, derge_index, text_not_in_target):
     target_index = target_index_file['annotations']
     text_without_work_id = get_text_without_work_id(target_index)
     prev_vol = 0
@@ -102,7 +102,10 @@ def filter_text_without_work_id(target_index_file, derge_index, text_not_in_targ
             logging.info(f"{uuid} not matched with anything..")
 
 if __name__ == "__main__":
-    target_index_file = from_yaml(Path(f"./updated_index.yml"))
-    filter_text_without_work_id(target_index_file)
+    target_index_file = from_yaml(Path(f"./new_index/pedurma_index.yml"))
+    derge_index_file = from_yaml(Path(f"./P000002.opf/index.yml"))
+    derge_index = derge_index_file['annotations']
+    text_not_in_target = Path('./text_not_in_pedurma.txt').read_text(encoding='utf-8').splitlines()
+    fix_text_without_work_id(target_index_file, derge_index, text_not_in_target)
     
 

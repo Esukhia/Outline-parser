@@ -1,9 +1,6 @@
 import yaml
-import csv
 import re
-from github import Github
 from pathlib import Path
-from collections import defaultdict
 
 
 def to_yaml(dict_):

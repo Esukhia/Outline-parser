@@ -1,10 +1,7 @@
 import yaml
 import re
-import logging
 from pathlib import Path
 from fuzzy_match import algorithims
-
-logging.basicConfig(filename="cross_check.log", level=logging.DEBUG, filemode="w")
 
 def get_similarity(text1, text2):
     similarity = algorithims.cosine(text1,text2)
@@ -88,10 +85,6 @@ def cross_check_text(pedurma_index, derge_index):
                 count += 1
                 print(f"{text_id} match found..")
                 del derge_index[match_text_uuid]
-            else:
-                logging.info(f"{text_id} match not found in derge index")
-        else:
-            logging.info(f"{uuid} match not found in derge")
     derge_leftover_text = get_leftover_text(derge_index)
     derge_leftover = to_yaml(derge_leftover_text)
     Path('./derge_leftover.yml').write_text(derge_leftover)

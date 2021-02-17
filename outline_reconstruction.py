@@ -1,13 +1,7 @@
-import re
 import yaml
-import logging
 
-from bs4 import BeautifulSoup
-from collections import defaultdict
-from pathlib import Path
 from pyewts import pyewts
 from fuzzy_match import algorithims
-from uuid import uuid4
 
 converter = pyewts()
 
@@ -63,6 +57,7 @@ def get_text_from_rkts(title, rkts_info):
 
 def reconstruct_text(text_id, text, title):
     print(text_id)
+    cur_text = {}
     if title:
         cur_text[text_id] = {
             'pedurma_title': text['title'],
@@ -92,11 +87,11 @@ def reconstruct_text(text_id, text, title):
         
     return cur_text
 
-def get_abnormal_titles(tegyur_pedurma_text_title):
+def get_abnormal_titles(text_titles):
     i = 1
     ab_title = []
-    for (r_id, t_id, title) in tegyur_pedurma_text_title[1:]:
-        prev_title = tegyur_pedurma_text_title[i-1][2]
+    for (r_id, t_id, title) in text_titles[1:]:
+        prev_title = text_titles[i-1][2]
         if title == prev_title and i != 1:
             ab_title.append(title)
         i+=1
